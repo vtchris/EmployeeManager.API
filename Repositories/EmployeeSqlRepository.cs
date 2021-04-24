@@ -1,4 +1,5 @@
 ﻿using EmployeeManager.API.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,15 @@ namespace EmployeeManager.API.Repositories
 {
     public class EmployeeSqlRepository : IEmployeeRepository
     {
+        private readonly AppDbContext db = null;
+
+        public EmployeeSqlRepository(AppDbContext db)
+        {
+            this.db = db;
+        }
         public void Delete(Employee emp)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Insert(Employee emp)
@@ -20,13 +27,19 @@ namespace EmployeeManager.API.Repositories
 
         public List<Employee> SelectAll()
         {
-            throw new NotImplementedException();
+            List<Employee> data = db.Employees.FromSqlRaw("SELECT EmployeeId, FirstName, LastName, " +
+                "Title, BirthDate, HireDate, Country, Notes FROM Employees ORDER BY EmployeeId ASC").ToList();
+
+            return data;
         }
 
-        public Employee SelectById(Employee emp)
+        public Employee SelectById(int id)
         {
-            throw new NotImplementedException();
-        }
+            Employee emp = db.Employees.FromSqlRaw("SELECT EmployeeId, FirstName, LastName, " +
+                "Title, BirthDate, HireDate, Country, Notes FROM Employees WHERE EmployeeId = {id}", id).SingleOrDefault();
+
+            return emp;
+         }
 
         public void Update(Employee emp)
         {
