@@ -15,14 +15,16 @@ namespace EmployeeManager.API.Repositories
         {
             this.db = db;
         }
-        public void Delete(Employee emp)
+        public void Delete(int id)
         {
-            
+            db.Database.ExecuteSqlRaw("DELETE FROM Employees WHERE EmployeeId = {0}", id);
         }
 
         public void Insert(Employee emp)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlRaw("INSERT INTO Employees (FirstName, LastName, Title, BirthDate, " +
+                "HireDate, Country, Notes) VALUES({0},{1},{2},{3},{4},{5},{6})", emp.FirstName, emp.LastName, 
+                emp.Title, emp.BirthDate, emp.HireDate, emp.Country, emp.Notes);
         }
 
         public List<Employee> SelectAll()
@@ -36,14 +38,16 @@ namespace EmployeeManager.API.Repositories
         public Employee SelectById(int id)
         {
             Employee emp = db.Employees.FromSqlRaw("SELECT EmployeeId, FirstName, LastName, " +
-                "Title, BirthDate, HireDate, Country, Notes FROM Employees WHERE EmployeeId = {id}", id).SingleOrDefault();
+                "Title, BirthDate, HireDate, Country, Notes FROM Employees WHERE EmployeeId = {0}", id).SingleOrDefault();
 
             return emp;
          }
 
         public void Update(Employee emp)
         {
-            throw new NotImplementedException();
+            db.Database.ExecuteSqlRaw("UPDATE Employees SET FirstName = {0}, LastName = {1}, Title = {2}, " +
+                "BirthDate = {3}, HireDate = {4}, Country = {5}, Notes = {6}", emp.FirstName, emp.LastName,
+                emp.Title, emp.BirthDate, emp.HireDate, emp.Country, emp.Notes);
         }
     }
 }
