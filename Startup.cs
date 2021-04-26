@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManager.API.Models;
+using EmployeeManager.API.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,8 @@ namespace EmployeeManager.API
             services.AddControllers();
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NorthwindDb")));
+
+            services.AddScoped<IEmployeeRepository, EmployeeSqlRepository>();
             
         }
 
