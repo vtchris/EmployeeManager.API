@@ -46,8 +46,8 @@ namespace EmployeeManager.API.Repositories
         public void Update(Employee emp)
         {
             db.Database.ExecuteSqlRaw("UPDATE Employees SET FirstName = {0}, LastName = {1}, Title = {2}, " +
-                "BirthDate = {3}, HireDate = {4}, Country = {5}, Notes = {6}", emp.FirstName, emp.LastName,
-                emp.Title, emp.BirthDate, emp.HireDate, emp.Country, emp.Notes);
+                "BirthDate = {3}, HireDate = {4}, Country = {5}, Notes = {6} WHERE EmployeeID = {7}", emp.FirstName, emp.LastName,
+                emp.Title, emp.BirthDate, emp.HireDate, emp.Country, emp.Notes, emp.EmployeeID);
         }
     }
 }
