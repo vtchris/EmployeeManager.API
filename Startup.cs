@@ -31,8 +31,9 @@ namespace EmployeeManager.API
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NorthwindDb")));
 
-            services.AddScoped<IEmployeeRepository, EmployeeSqlRepository>();
-            
+            //services.AddScoped<IEmployeeRepository, EmployeeSqlRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeStProcRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
