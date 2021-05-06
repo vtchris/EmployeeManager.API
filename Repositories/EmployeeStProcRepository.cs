@@ -22,7 +22,7 @@ namespace EmployeeManager.API.Repositories
         public void Delete(int id)
         {
             SqlParameter p = new SqlParameter("@EmployeeID", id);
-            db.Employees.FromSqlRaw("EXEC Employee_Delete @EmployeeID", p);
+            db.Database.ExecuteSqlRaw("EXEC Employee_Delete @EmployeeID", p);
 
         }
 
